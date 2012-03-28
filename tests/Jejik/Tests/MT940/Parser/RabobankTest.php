@@ -43,7 +43,7 @@ class RabobankTest extends \PHPUnit_Framework_TestCase
     {
         $balance = $this->statements[0]->getOpeningBalance();
         $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
-        $this->assertEquals('2011-06-14', $balance->getDate()->format('Y-m-d'));
+        $this->assertEquals('2011-06-14 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(473.17, $balance->getAmount());
     }
@@ -53,7 +53,7 @@ class RabobankTest extends \PHPUnit_Framework_TestCase
         $transactions = $this->statements[2]->getTransactions();
         $this->assertCount(2, $transactions);
 
-        $this->assertEquals('2011-06-17', $transactions[0]->getValueDate()->format('Y-m-d'));
+        $this->assertEquals('2011-06-17 00:00:00', $transactions[0]->getValueDate()->format('Y-m-d H:i:s'));
         $this->assertEquals(null, $transactions[0]->getBookDate());
         $this->assertEquals(-44.95, $transactions[0]->getAmount());
 
