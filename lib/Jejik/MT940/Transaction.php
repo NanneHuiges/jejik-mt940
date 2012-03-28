@@ -27,6 +27,11 @@ class Transaction
     private $contraAccount;
 
     /**
+    * @var string Contra account holder
+    */
+    private $contraAccountHolder;
+    
+    /**
      * @var float Transaction amount
      */
     private $amount;
@@ -72,6 +77,27 @@ class Transaction
         return $this;
     }
 
+    /**
+     * Getter for contraAccountHolder
+     *
+     * @return string
+     */
+    public function getContraAccountHolder()
+    {
+    	return $this->contraAccountHolder;
+    }
+
+    /**
+     * Setter for contraAccountHolder
+     *
+     * @param string $contraAccountHolder
+     * @return $this
+     */
+    public function setContraAccountHolder($contraAccountHolder)
+    {
+    	$this->contraAccountHolder = $contraAccountHolder;
+    	return $this;
+    }
     /**
      * Getter for amount
      *

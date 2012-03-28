@@ -57,4 +57,45 @@ class AbnAmro extends AbstractParser
 
         return null;
     }
+    
+    /**
+    * Get the contra account from a transaction
+    *
+    * @param array $lines The transaction text at offset 0 and the description at offset 1
+    * @return string|null
+    */
+    protected function contraAccountHolder(array $lines)
+    {
+    	if (!isset($lines[1])) {
+    		return null;
+    	}
+    	
+    	if (preg_match('/^[0-9.]{11,14}\s+(.+?)\s\s+/', $lines[1], $match)) {
+        	return trim($match[1]);
+        }
+        if (preg_match('/^GIRO[0-9 ]{9}\s+(.+?)\s\s+/', $lines[1], $match)) {
+        	return trim($match[1]);
+        }
+    
+    	return null;
+    }
+    
+    
+    /**
+    * Create a Transaction from MT940 transaction text lines
+    * Uses AbstractParser standard lines but adds AbnAmro specific feature for accountholder
+    * 
+    * @see \Jejik\MT940\Parser\AbstractParser\transaction
+    * @param array $lines The transaction text at offset 0 and the description at offset 1
+    * @return \Jejik\MT940\Transaction
+    */
+    protected function transaction(array $lines)
+    {
+    	$transaction = parent::transaction($lines);
+    	$transaction->setContraAccountHolder($this->contraAccountHolder($lines));
+    
+    	return $transaction;
+    }    
+    
+    
 }
